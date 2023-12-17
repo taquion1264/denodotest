@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url:jdbc:h2:mem: denododb
+    driver-class-name: org.h2.Driver
+    #avoid random db name
+    generate-unique-name: false
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  #open api configuration
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+

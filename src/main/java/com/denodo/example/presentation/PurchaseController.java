@@ -29,7 +29,7 @@ public class PurchaseController {
         this.userPurchaseService = userPurchaseService;
     }
 
-    @GetMapping("/mostFrequentAgeRange")
+    @GetMapping("/most_frequent_age_range")
     @ApiOperation("Get the most frequent age range in purchases within the specified date range.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved the most frequent age range."),
@@ -47,7 +47,7 @@ public class PurchaseController {
     }
 
 
-    @GetMapping("/purchaseDetailsAmountFiltered")
+    @GetMapping("/purchase_details_amount_filtered")
     @ApiOperation("Get details of purchases within the specified date range and price bigger than 100.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved the details of purchases."),
@@ -65,7 +65,7 @@ public class PurchaseController {
     }
 
 
-    @GetMapping("/purchaseDetails")
+    @GetMapping("/purchase_etails")
     @ApiOperation("Get details of purchases for the specified user and amount of sale.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved the details of purchases."),

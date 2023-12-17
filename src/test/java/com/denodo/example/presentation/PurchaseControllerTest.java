@@ -6,7 +6,6 @@ import com.denodo.example.domain.Price;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -46,7 +45,7 @@ public class PurchaseControllerTest {
                 .thenReturn(java.util.Optional.of(mockResult));
 
         // Performing the request and asserting the response
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/mostFrequentAgeRange")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/most_frequent_age_range")
                 .param("startDate", "2022-01-01").param("endDate", "2022-12-31"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));//.andExpect(MockMvcResultMatchers.jsonPath("$.18-25").value(5));
@@ -59,7 +58,7 @@ public class PurchaseControllerTest {
                 .thenReturn(java.util.Optional.empty());
 
         // Performing the request and asserting the response
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/mostFrequentAgeRange")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/most_frequent_age_range")
                 .param("startDate", "2022-01-01")
                 .param("endDate", "2022-12-31"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
@@ -79,7 +78,7 @@ public class PurchaseControllerTest {
                 .thenReturn(java.util.Optional.of(mockResult));
 
         // Performing the request and asserting the response
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/purchaseDetailsAmountFiltered")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/purchase_details_amount_filtered")
                 .param("startDate", "2022-01-01")
                 .param("endDate", "2022-12-31"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -98,7 +97,7 @@ public class PurchaseControllerTest {
                 .thenReturn(java.util.Optional.empty());
 
         // Performing the request and asserting the response
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/purchaseDetailsAmountFiltered")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/purchase_details_amount_filtered")
                 .param("startDate", "2022-01-01")
                 .param("endDate", "2022-12-31"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
@@ -112,7 +111,7 @@ public class PurchaseControllerTest {
                 .thenReturn(java.util.Optional.of(mockResult));
 
         // Performing the request and asserting the response
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/purchaseDetails")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/purchase_etails")
                 .param("userId", "userId").param("amount", "100.00"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
@@ -127,7 +126,7 @@ public class PurchaseControllerTest {
                 .thenReturn(java.util.Optional.empty());
 
         // Performing the request and asserting the response
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/purchaseDetails")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/purchase_etails")
                 .param("userId", "userId").param("amount", "100.00"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }

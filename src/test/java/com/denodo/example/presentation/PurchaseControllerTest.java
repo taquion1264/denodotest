@@ -46,9 +46,9 @@ public class PurchaseControllerTest {
 
         // Performing the request and asserting the response
         mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/most_frequent_age_range")
-                .param("startDate", "2022-01-01").param("endDate", "2022-12-31"))
+                        .param("startDate", "2022-01-01").param("endDate", "2022-12-31"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));//.andExpect(MockMvcResultMatchers.jsonPath("$.18-25").value(5));
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
@@ -59,13 +59,12 @@ public class PurchaseControllerTest {
 
         // Performing the request and asserting the response
         mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/most_frequent_age_range")
-                .param("startDate", "2022-01-01")
-                .param("endDate", "2022-12-31"))
+                        .param("startDate", "2022-01-01").param("endDate", "2022-12-31"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Test
-    public void testGetPurchaseDetailsAmountFiltered() throws Exception {
+    public void testGetPurchaseDetails() throws Exception {
         // Mocking the service response
         List<Buy> mockResult = Collections.singletonList(Buy.builder()
                 .buyId(1L)
@@ -74,45 +73,12 @@ public class PurchaseControllerTest {
                         .priceId(2L)
                         .build())
                 .build());
-        when(userPurchaseService.getPurchaseDetailsDateAmountFiltered("2022-01-01", "2022-12-31"))
-                .thenReturn(java.util.Optional.of(mockResult));
-
-        // Performing the request and asserting the response
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/purchase_details_amount_filtered")
-                .param("startDate", "2022-01-01")
-                .param("endDate", "2022-12-31"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content()
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers
-                        .jsonPath("$[0].buyId").value(1))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].price.price")
-                        .value(10));
-    }
-
-    @Test
-    public void testGetPurchaseDetailsAmountFilteredNoDataFound() throws Exception {
-        // Mocking the service response when no data found
-        when(userPurchaseService.getPurchaseDetailsDateAmountFiltered("2022-01-01", "2022-12-31"))
-                .thenReturn(java.util.Optional.empty());
-
-        // Performing the request and asserting the response
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/purchase_details_amount_filtered")
-                .param("startDate", "2022-01-01")
-                .param("endDate", "2022-12-31"))
-                .andExpect(MockMvcResultMatchers.status().isNotFound());
-    }
-
-    @Test
-    public void testGetPurchaseDetails() throws Exception {
-        // Mocking the service response
-        List<Buy> mockResult = Collections.singletonList(Buy.builder().buyId(1L).price(Price.builder().price(BigDecimal.TEN).priceId(2L).build()).build());
         when(userPurchaseService.getPurchaseDetails("userId", "100.00"))
                 .thenReturn(java.util.Optional.of(mockResult));
 
         // Performing the request and asserting the response
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/purchase_etails")
-                .param("userId", "userId").param("amount", "100.00"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/purchase_details/{userId}", "userId")
+                        .param("amount", "100.00"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].buyId").value(1))
@@ -126,10 +92,8 @@ public class PurchaseControllerTest {
                 .thenReturn(java.util.Optional.empty());
 
         // Performing the request and asserting the response
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/purchase_etails")
-                .param("userId", "userId").param("amount", "100.00"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/purchases/purchase_details/{userId}", "userId")
+                        .param("amount", "100.00"))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
     }
-
-
 }

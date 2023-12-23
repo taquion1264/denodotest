@@ -11,10 +11,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -65,22 +62,21 @@ public class PurchaseController {
     }
 
 
-    @GetMapping("/purchase_etails")
+    @GetMapping("/purchase_details/{userId}")
     @ApiOperation("Get details of purchases for the specified user and amount of sale.")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successfully retrieved the details of purchases."),
-            @ApiResponse(code = 404, message = "No data found for the specified date range.")
+            @ApiResponse(code = 404, message = "No data found for the specified user or amount.")
     })
     public ResponseEntity<List<Buy>> getPurchaseDetails(
-            @ApiParam(value = "user id to find", required = true)
-            @RequestParam("userId") String userId,
-            @ApiParam(value = "total Amount of Sale", required = true)
+            @ApiParam(value = "User ID to find", required = true)
+            @PathVariable("userId") String userId,
+            @ApiParam(value = "Total Amount of Sale", required = true)
             @RequestParam("amount") String amount) throws ResourceNotFoundException {
         List<Buy> result = userPurchaseService.getPurchaseDetails(userId, amount)
-                .orElseThrow(() -> new ResourceNotFoundException("No data found for the specified date range."));
+                .orElseThrow(() -> new ResourceNotFoundException("No data found for the specified user or amount."));
         return ResponseEntity.ok(result);
     }
-
 
     private void validateParameters(String firstValue, String secondValue) {
         if (StringUtils.isEmpty(firstValue) || StringUtils.isEmpty(secondValue)) {
